@@ -38,5 +38,11 @@ namespace solidariedadeAnonima.Infra.Repositories
             var result = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id);
             return result;
         }
+
+        public async Task<User> GetUserEmail(string email)
+        {
+            var result = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return result;
+        }
     }
 }

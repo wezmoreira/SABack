@@ -8,5 +8,6 @@ namespace solidariedadeAnonima.Domain.Repositories
         Task<IList<User>> GetAllUsersAsync();
         Task<User> FindByIdAsync(string id);
         Task UpdateUserAsync(User user);
+        Task<User> GetUserEmail(string email);
     }
 }

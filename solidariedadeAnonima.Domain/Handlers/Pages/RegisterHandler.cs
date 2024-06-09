@@ -4,7 +4,9 @@ using solidariedadeAnonima.Domain.Commands.UserCommand;
 using solidariedadeAnonima.Domain.Dto;
 using solidariedadeAnonima.Domain.Entities;
 using solidariedadeAnonima.Domain.Handlers.Contracts;
+using solidariedadeAnonima.Domain.Interfaces;
 using solidariedadeAnonima.Domain.Repositories;
+using solidariedadeAnonima.Domain.Security;
 
 namespace solidariedadeAnonima.Domain.Handlers.Pages
 {
@@ -13,13 +15,14 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
         //IHandler<DeactiveUserCommand>
     {
 
-        public RegisterHandler(IRegisterRepository repository)
+        public RegisterHandler(IRegisterRepository repository, IJwtProvider provider)
         {
             _repository = repository;
         }
 
         private readonly IRegisterRepository _repository;
         private readonly IUserRepository _userRepository;
+        private readonly IJwtProvider _jwtProvider;
 
         public async Task<GenericCommandResult> HandleAsync(CreateUserCommand command)
         {
@@ -29,7 +32,9 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
                 if (command.Invalid)
                     return new GenericCommandResult(false, "Algo deu errado, não foi possível criar usuáriuo", command.Notifications);
 
-                var user = new User(command.Email, command.Username, command.Password, 
+                var hashPassword = JwtProvider.HashPassword(command.Password);
+
+                var user = new User(command.Email, command.Username, hashPassword, 
                     command.City, command.Address, command.Cep, command.Number);
 
                 await _repository.CreateUserAsync(user);

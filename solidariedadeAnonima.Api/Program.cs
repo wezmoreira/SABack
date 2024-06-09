@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using solidariedadeAnonima.Api.Setup;
 using solidariedadeAnonima.Domain.Handlers.Entities;
 using solidariedadeAnonima.Domain.Handlers.Pages;
 using solidariedadeAnonima.Domain.Handlers.Security;
+using solidariedadeAnonima.Domain.Interfaces;
 using solidariedadeAnonima.Domain.Repositories;
 using solidariedadeAnonima.Domain.Security;
 using solidariedadeAnonima.Infra.Context;
@@ -55,6 +57,7 @@ void Dependencies(WebApplicationBuilder builder)
     builder.Services.AddScoped<ISecurityRepository, SecurityRepository>();
     builder.Services.AddScoped<IRegisterRepository, RegisterRepository>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IJwtProvider, JwtProvider>();
     #endregion
 
     #region Handlers
@@ -62,6 +65,7 @@ void Dependencies(WebApplicationBuilder builder)
     builder.Services.AddScoped<HomeHandler, HomeHandler>();
     builder.Services.AddScoped<SecurityHandler, SecurityHandler>();
     builder.Services.AddScoped<UserHandler, UserHandler>();
+    builder.Services.AddScoped<LoginHandler, LoginHandler>();
     #endregion
 }
 
@@ -110,26 +114,35 @@ void ConfigureCors(WebApplicationBuilder builder)
     });
 }
 
+//void Security(WebApplicationBuilder builder)
+//{
+//    var key = Encoding.ASCII.GetBytes(Settings.Secret);
+//    builder.Services.AddAuthentication(x =>
+//    {
+//        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    })
+//    .AddJwtBearer(x =>
+//    {
+//        x.RequireHttpsMetadata = false;
+//        x.SaveToken = true;
+//        x.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = new SymmetricSecurityKey(key),
+//            ValidateIssuer = false,
+//            ValidateAudience = false
+//        };
+//    });
+
+//    builder.Services.AddHttpContextAccessor();
+//}
+
 void Security(WebApplicationBuilder builder)
 {
-    var key = Encoding.ASCII.GetBytes(Settings.Secret);
-    builder.Services.AddAuthentication(x =>
-    {
-        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(x =>
-    {
-        x.RequireHttpsMetadata = false;
-        x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
+    builder.Services.ConfigureOptions<JwtOptionsSetup>();
+    builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
-    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
 }

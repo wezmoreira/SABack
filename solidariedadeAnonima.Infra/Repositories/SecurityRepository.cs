@@ -19,7 +19,7 @@ namespace solidariedadeAnonima.Infra.Repositories
 
         private readonly DataContext _dataContext;
 
-        public async Task<User> login(string email, string password)
+        public async Task<User> login(string email, string password, CancellationToken cancellationToken = default)
         {
             var result = await _dataContext.Users
                 .FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() 

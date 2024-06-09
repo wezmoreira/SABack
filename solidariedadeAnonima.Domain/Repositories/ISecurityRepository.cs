@@ -9,6 +9,6 @@ namespace solidariedadeAnonima.Domain.Repositories
 {
     public interface ISecurityRepository
     {
-        Task<User> login(string email, string password);
+        Task<User> login(string email, string password, CancellationToken cancellationToken = default);
     }
 }
