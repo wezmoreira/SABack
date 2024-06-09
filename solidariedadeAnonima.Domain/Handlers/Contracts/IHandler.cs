@@ -1,7 +1,5 @@
-﻿using MediatR;
-using solidariedadeAnonima.Domain.Commands;
+﻿using solidariedadeAnonima.Domain.Commands;
 using solidariedadeAnonima.Domain.Commands.Contracts;
-using solidariedadeAnonima.Domain.Shared;
 
 namespace solidariedadeAnonima.Domain.Handlers.Contracts
 {
@@ -10,10 +8,8 @@ namespace solidariedadeAnonima.Domain.Handlers.Contracts
         Task<GenericCommandResult> HandleAsync(T command);
     }
 
-
-    public interface IHandler<TCommand, TResponse>
-        : IRequestHandler<TCommand, Result<TResponse>>
-        where TCommand : ICommand<TResponse>
+    public interface IHandler<TCommand, CancelationToken> where TCommand : ICommand
     {
+        Task<GenericCommandResult> HandleAsync(TCommand command, CancellationToken cancellationToken);
     }
 }

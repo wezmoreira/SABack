@@ -63,7 +63,6 @@ void Dependencies(WebApplicationBuilder builder)
     #region Handlers
     builder.Services.AddScoped<RegisterHandler, RegisterHandler>();
     builder.Services.AddScoped<HomeHandler, HomeHandler>();
-    builder.Services.AddScoped<SecurityHandler, SecurityHandler>();
     builder.Services.AddScoped<UserHandler, UserHandler>();
     builder.Services.AddScoped<LoginHandler, LoginHandler>();
     #endregion

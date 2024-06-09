@@ -28,7 +28,7 @@ namespace solidariedadeAnonima.Api.Controllers
         //}
 
         [HttpGet("v1/health")]
-        public async Task<IActionResult> CreateUserAsync()
+        public async Task<IActionResult> HealthChecker()
         {
             return Ok("Funcionando");
         }

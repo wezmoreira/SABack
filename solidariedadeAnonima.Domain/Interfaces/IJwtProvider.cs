@@ -10,7 +10,5 @@ namespace solidariedadeAnonima.Domain.Interfaces
     public interface IJwtProvider
     {
         string Generate(User user);
-        //string HashPassword(string password);
-        //bool VerifyPassword(string enteredPassword, string storedPasswordHash);
     }
 }

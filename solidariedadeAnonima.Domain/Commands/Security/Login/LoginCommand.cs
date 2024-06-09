@@ -4,7 +4,7 @@ using solidariedadeAnonima.Domain.Commands.Contracts;
 
 namespace solidariedadeAnonima.Domain.Commands.Security.Login
 {
-    public class LoginCommand : Notifiable, ICommand<string>
+    public class LoginCommand : Notifiable, ICommand
     {
         public string Email { get; set; }
         public string Password { get; set; }

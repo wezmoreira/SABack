@@ -13,27 +13,15 @@ namespace solidariedadeAnonima.Api.Controllers
     [Route("api/account")]
     public class LoginController : ControllerBase
     {
-        //[HttpPost]
-        //[Route("login/v1")]
-        //[AllowAnonymous]
-        //public async Task<ActionResult<GenericCommandResult>> Authenticate(
-        //    [FromBody] SecurityCommand user,
-        //    [FromServices] SecurityHandler handler)
-        //{
-        //    return await handler.HandleAsync(user);
-        //}
-
         [HttpPost]
         [Route("login/v1")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate(
+        public async Task<GenericCommandResult> Authenticate(
             [FromBody] LoginCommand command, 
             [FromServices] LoginHandler handler,
             CancellationToken cancellationToken)
         {
-            var result = await handler.Handle(command, cancellationToken);
-
-            return Ok(result.Value); // TODO - refatorar o retorno
+            return await handler.HandleAsync(command, cancellationToken);
         }
     }
 }

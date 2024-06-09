@@ -4,12 +4,6 @@ using solidariedadeAnonima.Domain.Handlers.Contracts;
 using solidariedadeAnonima.Domain.Interfaces;
 using solidariedadeAnonima.Domain.Repositories;
 using solidariedadeAnonima.Domain.Security;
-using solidariedadeAnonima.Domain.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace solidariedadeAnonima.Domain.Handlers.Security
 {
@@ -27,30 +21,27 @@ namespace solidariedadeAnonima.Domain.Handlers.Security
         private readonly ISecurityRepository _securityRepository;
         private readonly IUserRepository _userRepository;
 
-        public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<GenericCommandResult> HandleAsync(LoginCommand command, CancellationToken cancellationToken)
         {
-            request.Validate();
-            if (request.Invalid)
-                return null; // TODO - refatorar
+            if (command.Invalid)
+                return new GenericCommandResult(false, "Algo deu errado", command.Notifications);
 
-            var user = await _userRepository.GetUserEmail(request.Email);
-
+            var user = await _userRepository.GetUserEmail(command.Email);
             if (user == null)
-                return null;
+                return new GenericCommandResult(false, "Usuário não encontrado", null);
 
-            var validUser = JwtProvider.VerifyPassword(request.Password, user.Password);
+            var validUser = JwtProvider.VerifyPassword(command.Password, user.Password);
             if (!validUser)
-                return null;
+                return new GenericCommandResult(false, "Usuário invalido!", null);
 
-            var result = await _securityRepository.login(request.Email, user.Password);
-
+            var result = await _securityRepository.login(command.Email, user.Password);
             if (result == null)
-                return null; // TODO - refatorar
+                return new GenericCommandResult(false, "Não foi possível realizar o login.", null);
 
 
             var token = _jwtProvider.Generate(result);
 
-            return token;
+            return new GenericCommandResult(true, "Login realizado com Sucesso!", token);
         }
     }
 }
