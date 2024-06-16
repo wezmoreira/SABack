@@ -16,8 +16,7 @@ namespace solidariedadeAnonima.Infra.Repositories
 
         public async Task<User> GetUserAsync(Guid id)
         {
-            var result = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-            return result;
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<IList<User>> GetAllUsersAsync()
@@ -35,14 +34,12 @@ namespace solidariedadeAnonima.Infra.Repositories
 
         public async Task<User> FindByIdAsync(string id)
         {
-            var result = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id);
-            return result;
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id);
         }
 
         public async Task<User> GetUserEmail(string email)
         {
-            var result = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            return result;
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using solidariedadeAnonima.Api.Setup;
+using solidariedadeAnonima.Domain.Handlers.Comment;
 using solidariedadeAnonima.Domain.Handlers.Entities;
 using solidariedadeAnonima.Domain.Handlers.Pages;
 using solidariedadeAnonima.Domain.Handlers.Security;
@@ -25,6 +26,7 @@ ConfigureCors(builder);
 Dependencies(builder);
 ConfigureSwagger(builder);
 Security(builder);
+ConfigureHeaders(builder);
 
 
 var app = builder.Build();
@@ -57,6 +59,7 @@ void Dependencies(WebApplicationBuilder builder)
     builder.Services.AddScoped<ISecurityRepository, SecurityRepository>();
     builder.Services.AddScoped<IRegisterRepository, RegisterRepository>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<ICommentRepository, CommentRepository>();
     builder.Services.AddScoped<IJwtProvider, JwtProvider>();
     #endregion
 
@@ -65,6 +68,7 @@ void Dependencies(WebApplicationBuilder builder)
     builder.Services.AddScoped<HomeHandler, HomeHandler>();
     builder.Services.AddScoped<UserHandler, UserHandler>();
     builder.Services.AddScoped<LoginHandler, LoginHandler>();
+    builder.Services.AddScoped<CommentHandler, CommentHandler>();
     #endregion
 }
 
@@ -144,4 +148,9 @@ void Security(WebApplicationBuilder builder)
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
+}
+
+void ConfigureHeaders(WebApplicationBuilder builder)
+{
+    builder.Services.AddHttpContextAccessor();
 }

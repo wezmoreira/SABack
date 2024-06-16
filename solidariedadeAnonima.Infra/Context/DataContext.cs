@@ -12,7 +12,8 @@ namespace solidariedadeAnonima.Infra.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<CardPrincipal> CardPrincipals { get; set; }
-        
+        public DbSet<Comments> Comments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

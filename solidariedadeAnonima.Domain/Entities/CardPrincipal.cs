@@ -2,9 +2,15 @@
 {
     public class CardPrincipal : Entity
     {
-        public CardPrincipal(string title, string description, string imageLarge, string imageOriginal, 
-            string imagePortrait, string imageLandscape, string imageTiny)
+        public CardPrincipal()
         {
+            
+        }
+
+        public CardPrincipal(string title, string description, string imageLarge, string imageOriginal, 
+            string imagePortrait, string imageLandscape, string imageTiny, Guid usuerId)
+        {
+            UserId = usuerId;
             Title = title;
             Description = description;
             ImageLarge = imageLarge;

@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace solidariedadeAnonima.Domain.Entities
+﻿namespace solidariedadeAnonima.Domain.Entities
 {
     public class Comments : Entity
     {
-        public Comments(string comment, string image)
+        public Comments()
+        {
+            
+        }
+
+        public Comments(string comment, Guid user, Guid card)
         {
             Comment = comment;
-            Image = image;
+            UserId = user;
+            CardPrincipalId = card;
             Date = DateTime.Now;
         }
 
         public User User { get; set; }
         public Guid UserId { get; set; }
+        public CardPrincipal Card { get; set; }
+        public Guid CardPrincipalId { get; set; }
         public string Comment { get; set; }
-        public string Image { get; set; }
         public DateTime Date { get; set; }
-        public List<Answers> Answers { get; set; } = new List<Answers>();
+        //public List<Answers> Answers { get; set; } = new List<Answers>();
     }
 }

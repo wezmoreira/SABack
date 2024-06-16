@@ -23,7 +23,13 @@ namespace solidariedadeAnonima.Infra.Context.Mappings
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .IsRequired() 
-                .OnDelete(DeleteBehavior.Cascade); 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.Card)
+                .WithMany()
+                .HasForeignKey(x => x.CardPrincipalId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.Comment)
                 .IsRequired()
@@ -31,11 +37,11 @@ namespace solidariedadeAnonima.Infra.Context.Mappings
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(200);
 
-            builder.Property(x => x.Image)
-                .IsRequired()
-                .HasColumnName("Image")
-                .HasColumnType("NVARCHAR")
-                .HasMaxLength(100);
+            //builder.Property(x => x.Image)
+            //    .IsRequired()
+            //    .HasColumnName("Image")
+            //    .HasColumnType("NVARCHAR")
+            //    .HasMaxLength(100);
 
             builder.Property(x => x.Date)
                 .IsRequired()
@@ -61,12 +67,12 @@ namespace solidariedadeAnonima.Infra.Context.Mappings
             //            .HasConstraintName("FK_Answer_Comment")
             //            .OnDelete(DeleteBehavior.Cascade));
 
-            builder
-                .HasMany(x => x.Answers)
-                .WithOne() 
-                .HasForeignKey(x => x.CommentsId)
-                .IsRequired() 
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder
+            //    .HasMany(x => x.Answers)
+            //    .WithOne() 
+            //    .HasForeignKey(x => x.CommentsId)
+            //    .IsRequired() 
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

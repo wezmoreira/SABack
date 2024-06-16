@@ -44,5 +44,9 @@ namespace solidariedadeAnonima.Domain.Entities
             Password = command.Password;
         }
 
+        public void UserFilter()
+        {
+            Password = "";
+        }
     }
 }

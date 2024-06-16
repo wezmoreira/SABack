@@ -1,24 +1,22 @@
 ﻿using solidariedadeAnonima.Domain.Commands.UserCommand;
 using solidariedadeAnonima.Domain.Commands;
-using solidariedadeAnonima.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using solidariedadeAnonima.Domain.Repositories;
 using solidariedadeAnonima.Domain.Handlers.Contracts;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace solidariedadeAnonima.Domain.Handlers.Entities
 {
     public class UserHandler : IHandler<UpdateUserCommand>
     {
-        public UserHandler(IUserRepository userRepository)
+        public UserHandler(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         private readonly IUserRepository _userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public async Task<GenericCommandResult> GetUserAsync(Guid userId)
         {
@@ -36,15 +34,17 @@ namespace solidariedadeAnonima.Domain.Handlers.Entities
             }
         }
 
-        public async Task<GenericCommandResult> FindByIdAsync(string userId)
+        public async Task<GenericCommandResult> FindByEmail()
         { // refazer
             try
             {
-                var user = await _userRepository.FindByIdAsync(userId);
+                var emailClaim = _httpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+                var user = await _userRepository.GetUserEmail(emailClaim);
                 if (user == null)
                     return new GenericCommandResult(false, "Algo deu errado, não foi possível recuperar o usuário", null);
 
-                user.Password = "";
+                user.UserFilter();
 
                 return new GenericCommandResult(true, "Usuario recuperado com sucesso", user);
             }
