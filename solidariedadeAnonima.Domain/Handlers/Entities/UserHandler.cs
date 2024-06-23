@@ -78,11 +78,13 @@ namespace solidariedadeAnonima.Domain.Handlers.Entities
 
             try
             {
-                var user = await _userRepository.GetUserAsync(command.Id);
-                if(user == null)
-                    return new GenericCommandResult(false, "O usuario não existe!", null);
+                var emailClaim = _httpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-                user.Update(command);
+                var user = await _userRepository.GetUserEmail(emailClaim);
+                if (user == null)
+                    return new GenericCommandResult(false, "Algo deu errado, não foi possível recuperar o usuário", null);
+
+                user.Update(command.UpdatedFields);
 
                 await _userRepository.UpdateUserAsync(user);
 

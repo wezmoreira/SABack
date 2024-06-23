@@ -55,11 +55,38 @@ namespace solidariedadeAnonima.Domain.Entities
             Active = false;
         }
 
-        public void Update(UpdateUserCommand command)
+        public void Update(IDictionary<string, object> updatedFields)
         {
-            Email = command.Email;
-            Username = command.Username;
-            Password = command.Password;
+            foreach (var field in updatedFields)
+            {
+                switch (field.Key.ToLower())
+                {
+                    case "email":
+                        Email = field.Value.ToString();
+                        break;
+                    case "username":
+                        Username = field.Value.ToString();
+                        break;
+                    //case "password":
+                    //    Password = field.Value.ToString();
+                    //    break;
+                    case "city":
+                        City = field.Value.ToString();
+                        break;
+                    case "state":
+                        State = field.Value.ToString();
+                        break;
+                    case "address":
+                        Address = field.Value.ToString();
+                        break;
+                    case "cep":
+                        Cep = field.Value.ToString();
+                        break;
+                    case "number":
+                        Number = field.Value.ToString();
+                        break;
+                }
+            }
         }
 
         public void UserFilter()
