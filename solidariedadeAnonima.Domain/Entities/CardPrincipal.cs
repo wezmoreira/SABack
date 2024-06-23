@@ -31,5 +31,11 @@
         public string ImageLandscape { get; set; }
         public string ImageTiny { get; set; }
         public DateTime Date { get; set; }
+
+
+        public void CardFilter()
+        {
+            User.Password = "";
+        }
     }
 }

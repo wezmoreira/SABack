@@ -17,6 +17,7 @@ namespace solidariedadeAnonima.Infra.Repositories
         public async Task<List<CardPrincipal>> GetPrincipalsCardsAsync()
         {
             return await _dataContext.CardPrincipals
+                .Include(x => x.User)
                 .AsNoTracking()
                 .ToListAsync();
         }

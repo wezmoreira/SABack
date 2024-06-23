@@ -34,8 +34,7 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
 
                 var hashPassword = JwtProvider.HashPassword(command.Password);
 
-                var user = new User(command.Email, command.Username, hashPassword, 
-                    command.City, command.Address, command.Cep, command.Number);
+                var user = new User(command, hashPassword);
 
                 await _repository.CreateUserAsync(user);
 

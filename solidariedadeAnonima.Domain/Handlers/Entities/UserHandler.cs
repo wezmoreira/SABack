@@ -26,7 +26,9 @@ namespace solidariedadeAnonima.Domain.Handlers.Entities
                 if (user == null)
                     return new GenericCommandResult(false, "Algo deu errado, não foi possível recuperar o usuário", null);
 
-                return new GenericCommandResult(true, "Usuario recuperado com sucesso", new {Username = user.Username, Email = user.Email, Active = user.Active});
+                user.UserFilter();
+
+                return new GenericCommandResult(true, "Usuario recuperado com sucesso", user);
             }
             catch (Exception ex)
             {

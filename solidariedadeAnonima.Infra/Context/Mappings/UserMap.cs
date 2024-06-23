@@ -38,6 +38,12 @@ namespace solidariedadeAnonima.Infra.Context.Mappings
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(40);
 
+            builder.Property(x => x.State)
+                .IsRequired()
+                .HasColumnName("State")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(20);
+
             builder.Property(x => x.Address)
                 .IsRequired()
                 .HasColumnName("Address")

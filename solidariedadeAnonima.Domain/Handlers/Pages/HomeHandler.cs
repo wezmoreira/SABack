@@ -28,6 +28,8 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
             if (result == null)
                 return new GenericCommandResult(false, "Algo deu errado", null);
 
+            result.ForEach(cards => cards.CardFilter());
+
             return new GenericCommandResult(true, "Cards retornados com sucesso", result);
         }
 

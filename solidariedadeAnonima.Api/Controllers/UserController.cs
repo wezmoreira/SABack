@@ -19,7 +19,7 @@ namespace solidariedadeAnonima.Api.Controllers
         }
 
         [HttpGet("all/accounts/v1")]
-        [Authorize]
+        //[Authorize]
         public async Task<GenericCommandResult> GetAllUsersAsync(
             [FromServices] UserHandler handler)
         {

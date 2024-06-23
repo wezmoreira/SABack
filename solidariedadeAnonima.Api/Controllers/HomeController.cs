@@ -11,23 +11,6 @@ namespace solidariedadeAnonima.Api.Controllers
     [Route("api/v1/cards")]
     public class HomeController : ControllerBase
     {
-
-        //[HttpGet("principal")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> GetCardsAsync(
-        //    [FromServices] HomeHandler handler)
-        //{
-        //    var result = new List<CardPrincipal>();
-        //    result.Add(new CardPrincipal("Title", "Description", null));
-        //    result.Add(new CardPrincipal("Title", "Description", null));
-
-        //    result.Add(new CardPrincipal("Title", "Description", null));
-
-        //    //var result = await handler.GetAllPrincipalCardsAsync();
-
-        //    return Ok(result);
-        //}
-
         [HttpGet("principal")]
         [AllowAnonymous]
         public async Task<GenericCommandResult> GetCardsAsync(
