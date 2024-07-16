@@ -6,6 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove=".github\**" />
+    <Content Remove=".github\**" />
+    <EmbeddedResource Remove=".github\**" />
+    <None Remove=".github\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 
@@ -27,10 +34,6 @@
   <ItemGroup>
     <ProjectReference Include="..\solidariedadeAnonima.Domain\solidariedadeAnonima.Domain.csproj" />
     <ProjectReference Include="..\solidariedadeAnonima.Infra\solidariedadeAnonima.Infra.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include=".github\workflows\workflow.development.yaml" />
   </ItemGroup>
 
 </Project>

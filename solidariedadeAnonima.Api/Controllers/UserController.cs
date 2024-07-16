@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using solidariedadeAnonima.Domain.Commands;
 using solidariedadeAnonima.Domain.Commands.UserCommand;
 using solidariedadeAnonima.Domain.Handlers.Entities;
+using solidariedadeAnonima.Domain.Security;
+using solidariedadeAnonima.Domain.Enums;
 
 namespace solidariedadeAnonima.Api.Controllers
 {
@@ -11,6 +13,7 @@ namespace solidariedadeAnonima.Api.Controllers
     public class UserController : ControllerBase
     {
         [HttpGet("account/{id}/v1")]
+        [HasPermission(Permissions.User)]
         public async Task<GenericCommandResult> GetUserAsync(
             [FromRoute] Guid id,
             [FromServices] UserHandler handler)
@@ -19,7 +22,7 @@ namespace solidariedadeAnonima.Api.Controllers
         }
 
         [HttpGet("all/accounts/v1")]
-        //[Authorize]
+        [HasPermission(Permissions.Admin)]
         public async Task<GenericCommandResult> GetAllUsersAsync(
             [FromServices] UserHandler handler)
         {
@@ -27,6 +30,7 @@ namespace solidariedadeAnonima.Api.Controllers
         }
 
         [HttpPut("account-update/v1")]
+        [HasPermission(Permissions.User)]
         public async Task<GenericCommandResult> UpdateUserAsync(
             [FromServices] UserHandler handler,
             [FromBody] UpdateUserCommand command)
@@ -34,8 +38,8 @@ namespace solidariedadeAnonima.Api.Controllers
             return await handler.HandleAsync(command);
         }
 
-        [Authorize]
         [HttpGet("account/v1")]
+        [HasPermission(Permissions.User)]
         public async Task<GenericCommandResult> GetUserAsync(
             [FromServices] UserHandler handler)
         {

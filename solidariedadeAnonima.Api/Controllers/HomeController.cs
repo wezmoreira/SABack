@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using solidariedadeAnonima.Domain.Commands;
 using solidariedadeAnonima.Domain.Commands.HomeCommand;
 using solidariedadeAnonima.Domain.Entities;
+using solidariedadeAnonima.Domain.Enums;
 using solidariedadeAnonima.Domain.Handlers.Pages;
+using solidariedadeAnonima.Domain.Security;
 
 namespace solidariedadeAnonima.Api.Controllers
 {
@@ -20,6 +22,7 @@ namespace solidariedadeAnonima.Api.Controllers
         }
 
         [HttpPost("new-card")]
+        [HasPermission(Permissions.User)]
         public async Task<GenericCommandResult> AddNewCardAsync(
             [FromBody] CreateCardCommand command,
             [FromServices] HomeHandler handler)

@@ -39,5 +39,12 @@ namespace solidariedadeAnonima.Domain.Handlers.Comment
 
             return new GenericCommandResult(true, "Comentário adicionado com sucesso", command.Comment);
         }
+
+        public async Task<GenericCommandResult> HandleAsync()
+        {
+            var result = await _commentRepository.GetCommentsAsync();
+
+            return new GenericCommandResult(true, "Cards retornados com sucesso", result);
+        }
     }
 }

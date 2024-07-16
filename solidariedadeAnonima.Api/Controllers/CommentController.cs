@@ -10,8 +10,16 @@ namespace solidariedadeAnonima.Api.Controllers
     public class CommentController : ControllerBase
     {
 
+        [HttpGet("load-comments")]
+        public async Task<GenericCommandResult> GetCommentsAsync(
+            [FromServices] CommentHandler handler)
+        {
+            return await handler.HandleAsync();
+        }
+
+
         [HttpPost("new-comment")]
-        public async Task<GenericCommandResult> AddNewCard(
+        public async Task<GenericCommandResult> AddNewCommentAsync(
             [FromBody] CommentCommand command,
             [FromServices] CommentHandler handler)
         {
