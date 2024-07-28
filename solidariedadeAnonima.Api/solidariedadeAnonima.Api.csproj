@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationInsightsResourceId>/subscriptions/04f02875-08b2-4f75-9641-1cd4e4bdd579/resourceGroups/pdi-novo/providers/microsoft.insights/components/Monitoramento</ApplicationInsightsResourceId>
+    <UserSecretsId>27eab1ff-b6e9-474f-87e2-fa3febe4ab52</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +16,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.12" />
