@@ -12,17 +12,14 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
 {
     public class RegisterHandler : 
         IHandler<CreateUserCommand>
-        //IHandler<DeactiveUserCommand>
     {
 
-        public RegisterHandler(IRegisterRepository repository, IJwtProvider provider)
+        public RegisterHandler(IRegisterRepository repository)
         {
             _repository = repository;
         }
 
         private readonly IRegisterRepository _repository;
-        private readonly IUserRepository _userRepository;
-        private readonly IJwtProvider _jwtProvider;
 
         public async Task<GenericCommandResult> HandleAsync(CreateUserCommand command)
         {
@@ -30,7 +27,7 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
             {
                 command.Validate();
                 if (command.Invalid)
-                    return new GenericCommandResult(false, "Algo deu errado, não foi possível criar usuáriuo", command.Notifications);
+                    return new GenericCommandResult(false, "Algo deu errado, não foi possível criar usuário", command.Notifications);
 
                 var hashPassword = JwtProvider.HashPassword(command.Password);
 
@@ -45,16 +42,5 @@ namespace solidariedadeAnonima.Domain.Handlers.Pages
                 return new GenericCommandResult(false, "Erro 500", ex.Message);
             }
         }
-
-        //public async Task<GenericCommandResult> HandleAsync(DeactiveUserCommand command)
-        //{
-        //    command.Validate();
-        //    if(command.Invalid)
-        //        return new GenericCommandResult(false, "Algo deu errado, Não foi possível desativar usuário", command.Notifications);
-
-        //    var result = _userRepository.FindAsync(command.Username, command.Email);
-
-        //    //TODO - Terminar 
-        //}
     }
 }

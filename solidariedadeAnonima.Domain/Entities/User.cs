@@ -7,6 +7,9 @@ namespace solidariedadeAnonima.Domain.Entities
 {
     public class User : Entity
     {
+        public User()
+        {
+        }
         public User(string email, string username, string password, string city, string address, string cep, string number)
         {
             Email = email;

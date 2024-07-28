@@ -17,20 +17,5 @@ namespace solidariedadeAnonima.Api.Controllers
         {
             return await handler.HandleAsync(command);
         }
-
-        //[HttpPut]
-        //public async Task<GenericCommandResult> DeactiveUser(
-        //    [FromServices] RegisterHandler handler,
-        //    [FromBody] DeactiveUserCommand user)
-        //{
-        //    //var result = await handler.DeactivateUserAsync(user);
-        //    //return result;
-        //}
-
-        [HttpGet("v1/health")]
-        public async Task<IActionResult> HealthCheck()
-        {
-            return Ok("Funcionando");
-        }
     }
 }

@@ -13,6 +13,7 @@ namespace solidariedadeAnonima.Domain.Commands.Security.Login
         {
             AddNotifications(new Contract()
                 .Requires()
+                .IsEmail(Email, "Email", "Email inválido")
                 .IsNotNullOrEmpty(Email, "Email", "Email é obrigatório")
                 .IsNotNullOrEmpty(Password, "Password", "Password é obrigatório")
                 );
