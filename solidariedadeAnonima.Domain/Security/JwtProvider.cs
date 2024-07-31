@@ -24,7 +24,8 @@ namespace solidariedadeAnonima.Domain.Security
             {
                 new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new(JwtRegisteredClaimNames.Email, user.Email),
-                new(JwtRegisteredClaimNames.Actort, user.Username)
+                new(JwtRegisteredClaimNames.Actort, user.Username),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             var credentials = new SigningCredentials(

@@ -13,6 +13,7 @@ using solidariedadeAnonima.Domain.Repositories;
 using solidariedadeAnonima.Domain.Security;
 using solidariedadeAnonima.Infra.Context;
 using solidariedadeAnonima.Infra.Repositories;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -153,6 +154,15 @@ void Security(WebApplicationBuilder builder)
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
+
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("User", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim(ClaimTypes.Email);
+        });
+    });
 }
 
 void ConfigureHeaders(WebApplicationBuilder builder)
